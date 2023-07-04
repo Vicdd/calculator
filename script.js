@@ -17,27 +17,27 @@ function divide(x, y) {
 function operate(x, operator, y) {
     switch (operator) {
         case "+":
-            return add(x,y);
+            return add(x, y);
         case "-":
-            return subtract(x,y);
+            return subtract(x, y);
         case "*":
-            return multiply(x,y);
+            return multiply(x, y);
         case "/":
-            return divide(x,y);
+            return divide(x, y);
     }
     return "Wrong operator";
 }
 
 let grid = document.querySelector(".grid");
 let exp = document.querySelector(".expression");
-let buttonText = [7, 8, 9, "+", "=", 4, 5, 6, "-", 1, 2, 3, "*", 0 , ".", "C", "/"];
+let buttonText = [7, 8, 9, "+", "=", 4, 5, 6, "-", 1, 2, 3, "*", 0, ".", "C", "/"];
 let btn;
 
 for (let i = 0; i < 17; i++) {
     btn = document.createElement("button");
     btn.setAttribute("type", "button");
     btn.textContent = buttonText[i];
-    
+
     // add class for css grid row span
     if (buttonText[i] == '=') btn.classList.add("equalBtn");
 
