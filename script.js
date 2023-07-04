@@ -30,24 +30,38 @@ function operate(x, operator, y) {
 
 let grid = document.querySelector(".grid");
 let exp = document.querySelector(".expression");
-let buttonText = [7, 8, 9, "+", 4, 5, 6, "-", 1, 2, 3, "*", 0 , "=", "C", "/"];
+let buttonText = [7, 8, 9, "+", "=", 4, 5, 6, "-", 1, 2, 3, "*", 0 , ".", "C", "/"];
 let btn;
-for (let i = 0; i < 16; i++) {
+
+for (let i = 0; i < 17; i++) {
     btn = document.createElement("button");
     btn.setAttribute("type", "button");
     btn.textContent = buttonText[i];
+    
+    // add class for css grid row span
+    if (buttonText[i] == '=') btn.classList.add("equalBtn");
+
     btn.addEventListener('click', () => {
-        exp.textContent = exp.textContent + buttonText[i];
+        // if text content is empty, don't compute operators and dot
+        if (!exp.textContent && ['+', '-', '*', '/', '.'].includes(buttonText[i])) {
+            return;
+        }
         if (buttonText[i] == 'C') {
             exp.textContent = "";
+            return;
         }
         if (buttonText[i] == '=') {
-            // This regex matches operators but include them in the resulting array;
+            // this regex matches operators but include them in the resulting array;
             let args = exp.textContent.split(/(?=[\=\+\/\*\-])|(?<=[\=\+\/\*\-])/g);
-            let res = operate(parseInt(args[0]), String(args[1]), parseInt(args[2]));
-            exp.textContent = res;
+            if (args.length >= 3) {
+                let res = operate(parseFloat(args[0]), String(args[1]), parseFloat(args[2]));
+                exp.textContent = res;
+            }
+            return;
         }
+        exp.textContent = exp.textContent + buttonText[i];
     });
+
     grid.appendChild(btn);
 }
 
