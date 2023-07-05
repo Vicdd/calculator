@@ -66,6 +66,9 @@ for (let i = 0; i < 19; i++) {
             exp.textContent += '%';
             return;
         }
+        if (buttonText[i] == '.' && exp.textContent.includes('.')) {
+            return;
+        }
         if (buttonText[i] == '=') {
             // this regex matches operators and include them in the resulting array;
             let args = exp.textContent.split(/(?=[\%\=\+\/\*\-])|(?<=[\%\=\+\/\*\-])/g);
@@ -75,16 +78,8 @@ for (let i = 0; i < 19; i++) {
             }
             return;
         }
-        if (exp.textContent == '0') {
-            if (buttonText[i] == '.') {
-                exp.textContent = exp.textContent + buttonText[i];
-            } else if (!['+', '-', '*', '/', "%"].includes(buttonText[i])) {
-                exp.textContent = buttonText[i];
-            }
-        } else {
-            exp.textContent = exp.textContent + buttonText[i];
-        }
 
+        exp.textContent = exp.textContent + buttonText[i];
     });
 
     grid.appendChild(btn);
