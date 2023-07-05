@@ -14,6 +14,10 @@ function divide(x, y) {
     return x / y;
 }
 
+function modulus(x, y) {
+    return x % y;
+}
+
 function operate(x, operator, y) {
     switch (operator) {
         case "+":
@@ -24,16 +28,18 @@ function operate(x, operator, y) {
             return multiply(x, y);
         case "/":
             return divide(x, y);
+        case "%":
+            return modulus(x, y);
     }
     return "Wrong operator";
 }
 
 let grid = document.querySelector(".grid");
 let exp = document.querySelector(".expression");
-let buttonText = [7, 8, 9, "+", "=", 4, 5, 6, "-", 1, 2, 3, "*", 0, ".", "C", "/"];
+let buttonText = ["AC", "<", "Mod", "+", 7, 8, 9, "-", 4, 5, 6, "*", 1, 2, 3, "/", ".", 0, "="];
 let btn;
 
-for (let i = 0; i < 17; i++) {
+for (let i = 0; i < 19; i++) {
     btn = document.createElement("button");
     btn.setAttribute("type", "button");
     btn.textContent = buttonText[i];
@@ -48,20 +54,37 @@ for (let i = 0; i < 17; i++) {
                 return;
             }
         }
-        if (buttonText[i] == 'C') {
+        if (buttonText[i] == 'AC') {
             exp.textContent = "";
+            return;
+        }
+        if (buttonText[i] == '<') {
+            exp.textContent = exp.textContent.substring(0, exp.textContent.length - 1);
+            return;
+        }
+        if (buttonText[i] == 'Mod') {
+            exp.textContent += '%';
             return;
         }
         if (buttonText[i] == '=') {
             // this regex matches operators and include them in the resulting array;
-            let args = exp.textContent.split(/(?=[\=\+\/\*\-])|(?<=[\=\+\/\*\-])/g);
+            let args = exp.textContent.split(/(?=[\%\=\+\/\*\-])|(?<=[\%\=\+\/\*\-])/g);
             if (args.length >= 3) {
                 let res = operate(parseFloat(args[0]), String(args[1]), parseFloat(args[2]));
                 exp.textContent = res;
             }
             return;
         }
-        exp.textContent = exp.textContent + buttonText[i];
+        if (exp.textContent == '0') {
+            if (buttonText[i] == '.') {
+                exp.textContent = exp.textContent + buttonText[i];
+            } else if (!['+', '-', '*', '/', "%"].includes(buttonText[i])) {
+                exp.textContent = buttonText[i];
+            }
+        } else {
+            exp.textContent = exp.textContent + buttonText[i];
+        }
+
     });
 
     grid.appendChild(btn);

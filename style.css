@@ -2,9 +2,13 @@
   display: grid;
   width: 200px;
   height: 200px;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
 }
 
 .equalBtn {
-  grid-row: span 4;
+  grid-column: span 2;
+}
+
+.expression {
+  height: 20px;
 }
