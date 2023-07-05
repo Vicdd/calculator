@@ -42,16 +42,18 @@ for (let i = 0; i < 17; i++) {
     if (buttonText[i] == '=') btn.classList.add("equalBtn");
 
     btn.addEventListener('click', () => {
-        // if text content is empty, don't compute operators and dot
-        if (!exp.textContent && ['+', '-', '*', '/', '.'].includes(buttonText[i])) {
-            return;
+        // suppress additional operators after one is typed or before a number is typed
+        if (['+', '-', '*', '/', '.'].includes(buttonText[i])) {
+            if (!exp.textContent || exp.textContent.match(/[\=\+\/\*\-]/)) {
+                return;
+            }
         }
         if (buttonText[i] == 'C') {
             exp.textContent = "";
             return;
         }
         if (buttonText[i] == '=') {
-            // this regex matches operators but include them in the resulting array;
+            // this regex matches operators and include them in the resulting array;
             let args = exp.textContent.split(/(?=[\=\+\/\*\-])|(?<=[\=\+\/\*\-])/g);
             if (args.length >= 3) {
                 let res = operate(parseFloat(args[0]), String(args[1]), parseFloat(args[2]));
