@@ -63,7 +63,7 @@ for (let i = 0; i < 19; i++) {
             return;
         }
         if (buttonText[i] == 'Mod') {
-            exp.textContent += '%';
+            if (exp.textContent.length != 0) exp.textContent += '%';
             return;
         }
         if (buttonText[i] == '.' && exp.textContent.includes('.')) {
