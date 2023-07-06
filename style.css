@@ -4,6 +4,7 @@ body {
   align-items: center;
   justify-content: center;
   background-color:bisque;
+  margin-top: 3rem;
 }
 
 .content {
@@ -11,9 +12,9 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 4rem;
+  margin-top: 3rem;
   background-color: rgb(42, 42, 42);
-  width: 220px;
+  width: 230px;
   padding-bottom: 20px;
   border-radius: 10px;
 }
@@ -45,4 +46,5 @@ p {
   overflow: hidden;
   font-size: 20px;
   background-color:gainsboro;
+  border-radius: 4px;
 }
