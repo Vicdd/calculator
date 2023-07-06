@@ -42,12 +42,21 @@ let btn;
 for (let i = 0; i < 19; i++) {
     btn = document.createElement("button");
     btn.setAttribute("type", "button");
+    btn.setAttribute("id", buttonText[i]);
     btn.textContent = buttonText[i];
 
     // add class for css grid row span
     if (buttonText[i] == '=') btn.classList.add("equalBtn");
 
     btn.addEventListener('click', () => {
+        function playAudio() {
+            const audio = document.getElementById("audio");
+            if (!audio) return;
+            audio.currentTime = 0;
+            audio.play();
+        }
+
+        playAudio();
         // suppress additional operators after one is typed or before a number is typed
         if (['+', '-', '*', '/', '.'].includes(buttonText[i])) {
             if (!exp.textContent || exp.textContent.match(/[\=\+\/\*\-]/)) {
@@ -85,3 +94,16 @@ for (let i = 0; i < 19; i++) {
     grid.appendChild(btn);
 }
 
+window.addEventListener("keydown", (e) => {
+    let key = document.getElementById(e.key);
+    if (e.key == "Enter") key = document.getElementById("=");
+    if (e.key == "Backspace") key = document.getElementById("<");
+    if (e.key == "Escape") key = document.getElementById("AC");
+    if (!key) return;
+    key.click();
+    
+    const audio = document.getElementById("audio");
+    if (!audio) return;
+    audio.currentTime = 0;
+    audio.play();
+})
